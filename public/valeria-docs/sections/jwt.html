@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valeria Framework - JWT Authentication</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0; background: #f9fafa; color: #222;
+    }
+    header {
+      background-color: #35495e;
+      color: white;
+      padding: 2rem 3rem;
+      font-weight: 700;
+      font-size: 1.6rem;
+      border-bottom: 2px solid #42b883;
+    }
+    nav {
+      background: #fff;
+      padding: 1rem 3rem;
+      border-bottom: 1px solid #e4e7ed;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: #35495e;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #42b883;
+    }
+    main {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+    h1 {
+      font-weight: 700;
+      color: #35495e;
+    }
+    pre {
+      background: #2d2d2d;
+      color: #ccc;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: "Fira Mono", monospace, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 1rem 0 2rem;
+    }
+    code {
+      font-family: "Fira Mono", monospace, monospace;
+      
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+    }
+    section > p {
+      line-height: 1.6;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .note {
+      background: #dff0d8;
+      border-left: 5px solid #42b883;
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      border-radius: 4px;
+      color: #3c763d;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header>Valeria Framework Documentation</header>
+   <nav>
+    <a href="index.html">Overview</a>
+    <a href="sections/routing.html">Routing</a>
+    <a href="sections/middleware.html">Middleware</a>
+    <a href="sections/jwt.html">JWT Authentication</a>
+    <a href="sections/authentication.html">JWT Authentication</a>
+    <a href="sections/structure.html">Project Structure</a>
+  </nav>
+  <main>
+    <h1>JWT Authentication</h1>
+    <p>
+      Valeria supports JSON Web Token (JWT) authentication to securely authenticate users via stateless tokens.
+      JWTs are compact, URL-safe tokens containing claims that the server can verify and trust.
+    </p>
+
+    <h2>Generating JWTs</h2>
+    <p>
+      After a user logs in, generate a JWT with a secret key and user payload:
+    </p>
+
+    <pre><code>&lt;?php
+use Valeria\Auth\JWT;
+
+$payload = [
+    'sub' => $user->id,
+    'email' => $user->email,
+    'iat' => time(),
+    'exp' => time() + 3600 // 1 hour expiration
+];
+
+$token = JWT::encode($payload, getenv('JWT_SECRET'));
+echo $token;
+</code></pre>
+
+    <h2>Verifying JWTs</h2>
+    <p>
+      To protect routes, use middleware that verifies the token's validity and decodes its payload:
+    </p>
+
+    <pre><code>&lt;?php
+use Valeria\Auth\JWT;
+use Valeria\Http\Request;
+
+class AuthMiddleware
+{
+    public function handle(Request $request, $next)
+    {
+        $token = $request->header('Authorization');
+        if (!$token || !JWT::verify($token, getenv('JWT_SECRET'))) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Unauthorized']);
+            exit;
+        }
+
+        return $next($request);
+    }
+}
+</code></pre>
+
+    <h2>JWT Middleware Usage</h2>
+    <p>
+      Apply the <code>#[Middleware('auth')]</code> attribute on controller methods to require JWT authentication:
+    </p>
+
+    <pre><code>#[Middleware('auth')]
+public function getProfile()
+{
+    // User is authenticated with a valid JWT
+}
+</code></pre>
+
+    <h2>Configuration</h2>
+    <p>
+      Set your secret key in the <code>.env</code> file:
+    </p>
+
+    <pre><code>JWT_SECRET=your-super-secret-key</code></pre>
+
+    <div class="note">
+      <strong>Note:</strong> Always keep your JWT secret safe and never expose it publicly.
+    </div>
+  </main>
+</body>
+</html>

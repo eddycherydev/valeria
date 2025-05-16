@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valeria Framework - Routing</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0; background: #f9fafa; color: #222;
+    }
+    header {
+      background-color: #35495e;
+      color: white;
+      padding: 2rem 3rem;
+      font-weight: 700;
+      font-size: 1.6rem;
+      border-bottom: 2px solid #42b883;
+    }
+    nav {
+      background: #fff;
+      padding: 1rem 3rem;
+      border-bottom: 1px solid #e4e7ed;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: #35495e;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #42b883;
+    }
+    main {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+    h1 {
+      font-weight: 700;
+      color: #35495e;
+    }
+    pre {
+      background: #2d2d2d;
+      color: #ccc;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: "Fira Mono", monospace, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 1rem 0 2rem;
+    }
+    code {
+      font-family: "Fira Mono", monospace, monospace;
+      
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+    }
+    section > p {
+      line-height: 1.6;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .note {
+      background: #dff0d8;
+      border-left: 5px solid #42b883;
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      border-radius: 4px;
+      color: #3c763d;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header>Valeria Framework Documentation</header>
+  <nav>
+    <a href="index.html">Overview</a>
+    <a href="sections/routing.html">Routing</a>
+    <a href="sections/middleware.html">Middleware</a>
+    <a href="sections/jwt.html">JWT Authentication</a>
+    <a href="sections/authentication.html">JWT Authentication</a>
+    <a href="sections/structure.html">Project Structure</a>
+  </nav>
+  <main>
+    <h1>Routing</h1>
+    <p>
+      Valeria provides a simple yet powerful routing system to define your application's endpoints for HTTP requests.
+      You can register routes for GET, POST, PUT, DELETE, and other HTTP verbs by mapping URLs to controller methods or closures.
+    </p>
+
+    <h2>Defining Routes</h2>
+    <p>
+      Routes are defined in your <code>public/index.php</code> or a dedicated routes file by using the <code>Router</code> class.
+    </p>
+
+    <pre><code>&lt;?php
+use Core\Router;
+use App\Controllers\HelloController;
+
+// Route for GET /
+Router::get('/', [HelloController::class, 'index']);
+
+// Route for POST /ask
+Router::post('/ask', [HelloController::class, 'askAgent']);
+
+// Dispatch the route matching the current request URI
+Router::dispatch();
+</code></pre>
+
+    <h2>Route Parameters</h2>
+    <p>
+      Valeria supports dynamic route parameters, which you can capture and use in your controller methods:
+    </p>
+
+    <pre><code>Router::get('/users/{id}', [UserController::class, 'show']);</code></pre>
+
+    <p>
+      The <code>{id}</code> part will be parsed from the URL and passed as an argument to the <code>show</code> method.
+    </p>
+
+    <h2>Route Methods</h2>
+    <p>
+      The following static methods are available on the <code>Router</code> class:
+    </p>
+    <ul>
+      <li><code>Router::get($path, $handler)</code></li>
+      <li><code>Router::post($path, $handler)</code></li>
+      <li><code>Router::put($path, $handler)</code></li>
+      <li><code>Router::delete($path, $handler)</code></li>
+      <li><code>Router::any($path, $handler)</code> — accepts any HTTP verb</li>
+    </ul>
+
+    <h2>Dispatching Requests</h2>
+    <p>
+      Once your routes are defined, calling <code>Router::dispatch()</code> will match the current request URI and method, and execute the assigned handler.
+    </p>
+
+    <div class="note">
+      <strong>Note:</strong> Handlers can be callable arrays like <code>[ControllerClass::class, 'method']</code> or simple closures.
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valeria Framework - Middleware</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0; background: #f9fafa; color: #222;
+    }
+    header {
+      background-color: #35495e;
+      color: white;
+      padding: 2rem 3rem;
+      font-weight: 700;
+      font-size: 1.6rem;
+      border-bottom: 2px solid #42b883;
+    }
+    nav {
+      background: #fff;
+      padding: 1rem 3rem;
+      border-bottom: 1px solid #e4e7ed;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: #35495e;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #42b883;
+    }
+    main {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+    h1 {
+      font-weight: 700;
+      color: #35495e;
+    }
+    pre {
+      background: #2d2d2d;
+      color: #ccc;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: "Fira Mono", monospace, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 1rem 0 2rem;
+    }
+    code {
+      font-family: "Fira Mono", monospace, monospace;
+    
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+    }
+    section > p {
+      line-height: 1.6;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .note {
+      background: #dff0d8;
+      border-left: 5px solid #42b883;
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      border-radius: 4px;
+      color: #3c763d;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header>Valeria Framework Documentation</header>
+  <nav>
+    <a href="index.html">Overview</a>
+    <a href="sections/routing.html">Routing</a>
+    <a href="sections/middleware.html">Middleware</a>
+    <a href="sections/jwt.html">JWT Authentication</a>
+    <a href="sections/authentication.html">JWT Authentication</a>
+    <a href="sections/structure.html">Project Structure</a>
+  </nav>
+  <main>
+    <h1>Middleware</h1>
+    <p>
+      Middleware allows you to filter HTTP requests entering your application. It acts as a layer that can intercept requests before they reach your controllers.
+      Use middleware to implement authentication, logging, CORS, or any pre/post request logic.
+    </p>
+
+    <h2>Defining Middleware</h2>
+    <p>
+      Middleware classes must implement a <code>handle</code> method which receives the request and a <code>next</code> closure to forward the request.
+    </p>
+
+    <pre><code>&lt;?php
+namespace App\Middleware;
+
+class AuthMiddleware
+{
+    public function handle($request, $next)
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        return $next($request);
+    }
+}
+</code></pre>
+
+    <h2>Registering Middleware</h2>
+    <p>
+      Middleware are registered in the core framework configuration and can be assigned globally or to specific routes.
+    </p>
+
+    <h2>Assign Middleware to Routes</h2>
+    <p>
+      Use the <code>#[Middleware('auth')]</code> attribute above your controller method to apply middleware:
+    </p>
+
+    <pre><code>#[Middleware('auth')]
+public function dashboard()
+{
+    // This route requires the user to be authenticated
+}
+</code></pre>
+
+    <h2>Middleware Pipeline</h2>
+    <p>
+      When a request is dispatched, Valeria builds a middleware pipeline and executes each middleware in sequence. The request passes through each middleware until it reaches the controller.
+    </p>
+
+    <div class="note">
+      <strong>Note:</strong> Middleware provide a clean and reusable way to handle common logic and keep your controllers focused on business logic.
+    </div>
+  </main>
+</body>
+</html>

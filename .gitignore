@@ -1,0 +1,51 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+
+# Composer dependencies
+/vendor/
+/composer.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+*.bak
+*.swp
+*~
+
+# Cache and sessions
+/cache/
+/sessions/
+/tmp/
+
+# Public uploads or generated files (if any)
+public/uploads/
+public/storage/
+
+# PHPUnit cache and reports
+.phpunit.result.cache
+coverage/
+
+# Node modules (if you use frontend tools)
+node_modules/
+
+# Build files (if any)
+dist/
+build/
+
+mantis

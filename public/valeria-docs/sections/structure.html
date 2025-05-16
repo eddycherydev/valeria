@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valeria Framework - Project Structure</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0; background: #f9fafa; color: #222;
+    }
+    header {
+      background-color: #35495e;
+      color: white;
+      padding: 2rem 3rem;
+      font-weight: 700;
+      font-size: 1.6rem;
+      border-bottom: 2px solid #42b883;
+    }
+    nav {
+      background: #fff;
+      padding: 1rem 3rem;
+      border-bottom: 1px solid #e4e7ed;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: #35495e;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #42b883;
+    }
+    main {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+    h1 {
+      font-weight: 700;
+      color: #35495e;
+    }
+    pre {
+      background: #2d2d2d;
+      color: #ccc;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: "Fira Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 1rem 0 2rem;
+    }
+    code {
+      font-family: "Fira Mono", monospace;
+    
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+    }
+    section > p {
+      line-height: 1.6;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .folder {
+      font-weight: bold;
+      color: #42b883;
+    }
+    .note {
+      background: #fff3cd;
+      border-left: 5px solid #ffc107;
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      border-radius: 4px;
+      color: #856404;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <header>Valeria Framework Documentation</header>
+ <nav>
+    <a href="index.html">Overview</a>
+    <a href="sections/routing.html">Routing</a>
+    <a href="sections/middleware.html">Middleware</a>
+    <a href="sections/jwt.html">JWT Authentication</a>
+    <a href="sections/authentication.html">JWT Authentication</a>
+    <a href="sections/structure.html">Project Structure</a>
+  </nav>
+  <main>
+    <h1>Project Structure</h1>
+    <p>
+      Valeria follows a clean and simple directory structure to keep your code organized, scalable, and easy to maintain.
+    </p>
+
+    <h2>Typical Folder Layout</h2>
+    <pre><code>.
+├── app/
+│   ├── Controllers/
+│   ├── Middlewares/
+│   ├── Models/
+│   └── Services/
+├── config/
+│   └── routes.php
+├── core/
+│   ├── Env.php
+│   ├── Router.php
+│   ├── Request.php
+│   └── Response.php
+├── database/
+│   ├── migrations/
+│   └── seeds/
+├── public/
+│   └── index.php
+├── storage/
+│   └── logs/
+├── lucid/
+│   ├── Lucid.php
+│   └── Connection.php
+├── .env
+├── composer.json
+└── README.md
+</code></pre>
+
+    <h2>Key Directories</h2>
+
+    <p><span class="folder">app/</span> – Your application's core logic: controllers, models, services, and middlewares.</p>
+    <p><span class="folder">core/</span> – The framework kernel. Manages routing, environment, request/response handling, etc.</p>
+    <p><span class="folder">config/</span> – Configuration files for routes, services, and custom settings.</p>
+    <p><span class="folder">public/</span> – Public entry point for your app, like Laravel's <code>public/index.php</code>.</p>
+    <p><span class="folder">lucid/</span> – Contains the internal ORM (Lucid) and database connections.</p>
+    <p><span class="folder">storage/</span> – Stores logs and temporary files.</p>
+    <p><span class="folder">database/</span> – Your migrations and seeders go here.</p>
+
+    <div class="note">
+      💡 You can customize the directory names, but the core structure is designed to reflect separation of concerns.
+    </div>
+
+    <h2>Bootstrap File</h2>
+    <p>
+      The <code>public/index.php</code> file is your application's front controller. It boots the core and handles the request lifecycle.
+    </p>
+
+    <pre><code>&lt;?php
+require __DIR__ . '/../vendor/autoload.php';
+
+use Core\Router;
+use Core\Request;
+
+$router = new Router();
+require __DIR__ . '/../config/routes.php';
+
+$response = $router->dispatch(Request::capture());
+$response->send();
+</code></pre>
+  </main>
+</body>
+</html>
