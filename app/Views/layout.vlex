@@ -1,0 +1,6 @@
+<html>
+  <body>
+    <header>@yield('header')</header>
+    <main>@yield('content')</main>
+  </body>
+</html>

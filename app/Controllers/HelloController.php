@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers;
-use Core\View;
+use Core\Vlex;
 
 use Core\Attributes\Middleware;
 
@@ -17,7 +17,7 @@ class HelloController
     public function index()
     {
         echo json_encode([
-            'message' => 'Hola desde NovaFlux!',
+            'message' => 'Hola desde Valeria Framework!',
             'csrf_token' => bin2hex(random_bytes(32))
         ]);
     }
@@ -26,6 +26,6 @@ class HelloController
     public function home()
     {
        
-       View::render('home/home.html', ['name' => 'Valeria']);
+       Vlex::render('home/home', ['name' => 'Valeria'], 'layout.vlex');
     }
 }

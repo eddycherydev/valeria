@@ -1,0 +1,8 @@
+
+@section('header')
+  <h1>Mi encabezado</h1>
+@endsection
+
+@section('content')
+  <p>Hola {{ $nombre }}</p>
+@endsection
