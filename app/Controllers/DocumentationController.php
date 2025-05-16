@@ -5,7 +5,7 @@ use Core\Vlex;
 use Core\Attributes\Middleware;
 
 
-class HelloController
+class DocumentationController
 {
     // #[Middleware('log')]
     public function askAgent()
@@ -29,7 +29,10 @@ class HelloController
     }
 
 
-    
+    public function lucid()
+    {  
+       Vlex::render('documentation/lucid', [], 'layout.vlex');
+    }
 
 
     

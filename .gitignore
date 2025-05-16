@@ -49,3 +49,4 @@ dist/
 build/
 
 mantis
+public/css/*

@@ -25,7 +25,7 @@ class QueryBuilder {
         }
         $sql .= " LIMIT 1";
 
-        $stmt = Connection::getInstance()->prepare($sql);
+        $stmt = Connection::getInstance()->getPDO()->prepare($sql);
         $stmt->execute($this->bindings);
         return $stmt->fetch(\PDO::FETCH_OBJ) ?: null;
     }
@@ -34,7 +34,7 @@ class QueryBuilder {
         $columns = implode(',', array_keys($data));
         $placeholders = implode(',', array_fill(0, count($data), '?'));
         $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
-        $stmt = Connection::getInstance()->prepare($sql);
+        $stmt = Connection::getInstance()->getPDO()->prepare($sql);
         return $stmt->execute(array_values($data));
     }
 
@@ -49,7 +49,7 @@ class QueryBuilder {
         if (!empty($this->wheres)) {
             $sql .= " WHERE " . implode(" AND ", $this->wheres);
         }
-        $stmt = Connection::getInstance()->prepare($sql);
+        $stmt = Connection::getInstance()->getPDO()->prepare($sql);
         return $stmt->execute(array_merge($values, $this->bindings));
     }
 }

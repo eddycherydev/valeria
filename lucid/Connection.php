@@ -13,12 +13,14 @@ class Connection
 
     public function __construct()
     {
-        Env::load(__DIR__ . '/../../.env'); // o ajusta la ruta
+        Env::load(__DIR__ . '/../.env'); // o ajusta la ruta
 
         $dsn = Env::get('DB_CONNECTION', 'mysql') . 
               ":host=" . Env::get('DB_HOST', '127.0.0.1') .
               ";dbname=" . Env::get('DB_DATABASE', 'valeria') .
+              ";port=" . Env::get('DB_PORT', '3306') .
               ";charset=" . Env::get('DB_CHARSET', 'utf8mb4');
+              
 
         try {
             $this->pdo = new PDO(

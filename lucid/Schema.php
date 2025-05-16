@@ -2,6 +2,8 @@
 namespace Lucid;
 
 use PDO;
+use Lucid\Connection;
+use Lucid\Blueprint;
 
 class Schema {
     public static function create(string $table, callable $callback): void {
@@ -9,36 +11,8 @@ class Schema {
         $callback($blueprint);
 
         $sql = $blueprint->toSql();
-        $pdo = Connection::getInstance();
+        $pdo = Connection::getInstance()->getPDO();
         $pdo->exec($sql);
     }
 }
 
-class Blueprint {
-    private string $table;
-    private array $columns = [];
-
-    public function __construct(string $table) {
-        $this->table = $table;
-    }
-
-    public function increments(string $column): self {
-        $this->columns[] = "$column INTEGER PRIMARY KEY AUTOINCREMENT";
-        return $this;
-    }
-
-    public function string(string $column, int $length = 255): self {
-        $this->columns[] = "$column VARCHAR($length)";
-        return $this;
-    }
-
-    public function integer(string $column): self {
-        $this->columns[] = "$column INTEGER";
-        return $this;
-    }
-
-    public function toSql(): string {
-        $cols = implode(", ", $this->columns);
-        return "CREATE TABLE IF NOT EXISTS {$this->table} ({$cols});";
-    }
-}
