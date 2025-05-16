@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use Core\Vlex;
+use Core\View;
 
 use Core\Attributes\Middleware;
 
@@ -32,6 +33,12 @@ class DocumentationController
     public function lucid()
     {  
        Vlex::render('documentation/lucid', [], 'layout.vlex');
+    }
+
+    
+    public function templateEngine()
+    {  
+       View::render('documentation/templateEngine', []);
     }
 
 

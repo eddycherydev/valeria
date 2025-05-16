@@ -11,5 +11,6 @@ Router::post('/ask', [HelloController::class, 'askAgent']);
 Router::get('/home', [HelloController::class, 'home']);
 
 Router::get('/docs/lucid', [DocumentationController::class, 'lucid']);
+Router::get('/docs/templateEngine', [DocumentationController::class, 'templateEngine']);
 
 Router::dispatch();

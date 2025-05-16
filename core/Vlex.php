@@ -40,6 +40,12 @@ class Vlex
 
     protected static function compile(string $template, array $data): string
     {
+        // 🔒 Escapar bloques <code>...</code> para evitar procesamiento Blade
+        $template = preg_replace_callback('/<code>(.*?)<\/code>/is', function ($matches) {
+            $escaped = htmlspecialchars($matches[1]);
+            return "<code>{$escaped}</code>";
+        }, $template);
+
         // Comentarios
         $template = preg_replace('/\{\{\-\-.*?\-\-\}\}/s', '', $template);
 

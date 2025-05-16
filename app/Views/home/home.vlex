@@ -12,7 +12,7 @@
     <li>Sintaxis sencilla como Blade</li>
     <li>Componentes reutilizables</li>
     <li>Zero dependencies</li>
-    <li>Hecho por ti 😎</li>
+    <li> Hecho por ti 😎</li>
   </ul>
 </section>
 
@@ -23,7 +23,9 @@
       Tu email:
       <input type="email" name="email" placeholder="tucorreo@ejemplo.com" required>
     </label>
-    <button type="submit">Quiero saber más</button>
+   
+      <button type="submit">Quiero saber más</button>
+   
   </form>
 </section>
 
