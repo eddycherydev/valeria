@@ -22,7 +22,7 @@
   </header>
 
   <main class="container">
-    
+    <?php $View::yield('content'); ?>
   </main>
 
   <footer class="container">

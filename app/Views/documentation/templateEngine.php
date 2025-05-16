@@ -1,4 +1,4 @@
-@section('content')
+<?php $View::section('content'); ?>
       <h1>Motor de Plantillas Vlex</h1>
   <p>Este motor de plantillas permite escribir código HTML mezclado con directivas al estilo de Blade (Laravel), que son compiladas a PHP.</p>
 
@@ -129,4 +129,4 @@
   <h2>Compatibilidad</h2>
   <p>Este HTML es completamente compatible con PicoCSS para un diseño limpio y responsive sin estilos personalizados adicionales.</p>
 
-@endsection
+<?php $View::endSection('content'); ?>
