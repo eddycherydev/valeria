@@ -1,52 +1,28 @@
 <?php
+
 namespace Core;
+namespace Core;
+
+use Jenssegers\Blade\Blade;
 
 class View
 {
-    protected static array $sections = [];
-    protected static ?string $currentSection = null;
+    protected static $blade;
 
-    public static function render(string $view, array $data = [], string $layout = 'layout')
+    public static function init()
     {
-        $viewPath = __DIR__ . "/../app/Views/{$view}.php";
-        $layoutPath = __DIR__ . "/../app/Views/{$layout}.php";
+        if (!self::$blade) {
+            $views = __DIR__ . '/../app/Views';
+            $cache = __DIR__ . '/../storage/cache';
 
-        if (!file_exists($viewPath)) {
-            throw new \Exception("View file not found: {$viewPath}");
+            self::$blade = new Blade($views, $cache);
         }
 
-        if (!file_exists($layoutPath)) {
-            throw new \Exception("Layout file not found: {$layoutPath}");
-        }
-
-        extract($data); 
-
-        // Hacer que View sea accesible como $View dentro de las vistas
-        $View = new \Core\View();
-
-        ob_start();
-        require $viewPath;
-        $content = ob_get_clean();
-
-        require $layoutPath;
+        return self::$blade;
     }
 
-    public static function section(string $name)
+    public static function render(string $view, array $data = [])
     {
-        self::$currentSection = $name;
-        ob_start();
-    }
-
-    public static function endSection()
-    {
-        if (self::$currentSection) {
-            self::$sections[self::$currentSection] = ob_get_clean();
-            self::$currentSection = null;
-        }
-    }
-
-    public static function yield(string $name)
-    {
-        echo self::$sections[$name] ?? '';
+        echo self::init()->make($view, $data)->render();
     }
 }
