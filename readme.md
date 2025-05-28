@@ -14,4 +14,8 @@
 - **Middleware support**
 - Modular architecture and extensible
 
-## 📂 Project Structure
+## 📂 To Install the framework
+- Clone Repository
+- remove extention **(.txt)** from **.env.txt** 
+- Config **.env** file
+- That's it ! :)
