@@ -13,4 +13,18 @@ Router::get('/home', [HelloController::class, 'home']);
 Router::get('/docs/lucid', [DocumentationController::class, 'lucid']);
 Router::get('/docs/templateEngine', [DocumentationController::class, 'templateEngine']);
 
+
+Router::macro('admin', function ($uri, $action) {
+    Router::get("/admin/$uri", $action);
+});
+
+Router::admin('home', [HelloController::class, 'home']);
+
+
+
+
+
+
+
+
 Router::dispatch();

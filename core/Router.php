@@ -1,7 +1,11 @@
 <?php
 namespace Core;
+use Core\Macroable;
 
 class Router {
+    
+    use Macroable;
+    
     private static array $routes = [];
 
     public static function get($path, $callback) {
