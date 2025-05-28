@@ -1,7 +1,7 @@
 <?php
-namespace Lucid\Commands;
+namespace Core\Lucid\Commands;
 
-use Lucid\Connection;
+use Core\Lucid\Connection;
 use PDO;
 
 class MigrateCommand {

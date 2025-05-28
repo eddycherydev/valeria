@@ -4,7 +4,7 @@ use Core\Vlex;
 use App\Models\User;
 
 use Core\Attributes\Middleware;
-use Lucid\QueryBuilder;
+use Core\Lucid\QueryBuilder;
 
 
 class HelloController

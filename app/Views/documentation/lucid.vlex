@@ -50,7 +50,7 @@ DB_PASSWORD=secret
   <pre><code>&lt;?php
 namespace App\Models;
 
-use Lucid\Model;
+use Core\Lucid\Model;
 
 class User extends Model
 {
@@ -90,7 +90,7 @@ $user->delete();
 
 <section>
   <h2>Advanced Query Builder</h2>
-  <pre><code>use Lucid\QueryBuilder;
+  <pre><code>use Core\Lucid\QueryBuilder;
 
 $results = QueryBuilder::table('users')
     ->where('status', 'active')
@@ -129,7 +129,7 @@ $results = QueryBuilder::table('users')
 </section>
 
 <section>
-  <h2>Why Use Lucid?</h2>
+  <h2>Why use Core\Lucid?</h2>
   <ul>
     <li>Clean and expressive code.</li>
     <li>Lightweight with no external dependencies.</li>
@@ -162,7 +162,7 @@ $results = QueryBuilder::table('users')
 
   <pre><code class="language-php">
 // /lucid/Connection.php
-use Lucid\Connection;
+use Core\Lucid\Connection;
 
 $pdo = Connection::getInstance()->getPDO();
 
@@ -175,7 +175,7 @@ $users = $pdo->query("SELECT * FROM users")->fetchAll();
   </p>
 
   <pre><code class="language-php">
-use Lucid\Connection;
+use Core\Lucid\Connection;
 
 $pdo = Connection::getInstance()->getPDO();
   </code></pre>

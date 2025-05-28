@@ -1,5 +1,7 @@
 <?php
-namespace Lucid;
+namespace Core\Lucid;
+
+
 
 class QueryBuilder {
     protected string $table = '';

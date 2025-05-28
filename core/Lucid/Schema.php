@@ -1,9 +1,9 @@
 <?php
-namespace Lucid;
+namespace Core\Lucid;
 
 use PDO;
-use Lucid\Connection;
-use Lucid\Blueprint;
+use Core\Lucid\Connection;
+use Core\Lucid\Blueprint;
 
 class Schema {
     public static function create(string $table, callable $callback): void {

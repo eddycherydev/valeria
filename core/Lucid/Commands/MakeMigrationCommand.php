@@ -1,5 +1,5 @@
 <?php
-namespace Lucid\Commands;
+namespace Core\Lucid\Commands;
 
 class MakeMigrationCommand
 {
@@ -17,8 +17,8 @@ class MakeMigrationCommand
         $content = <<<PHP
         <?php
 
-        use Lucid\Schema;
-        use Lucid\Blueprint;
+        use Core\Lucid\Schema;
+        use Core\Lucid\Blueprint;
 
         return new class {
             public function up(): void {

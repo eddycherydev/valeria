@@ -8,6 +8,7 @@ class Env
         // Si se pasa una carpeta, buscar el archivo .env dentro de ella
         if (is_dir($path)) {
             $path = rtrim($path, DIRECTORY_SEPARATOR) . '/.env';
+            
         }
 
         if (!file_exists($path)) {

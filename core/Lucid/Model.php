@@ -1,8 +1,8 @@
 <?php
-namespace Lucid;
+namespace Core\Lucid;
 
-use Lucid\Contracts\ModelInterface;
-use Lucid\QueryBuilder;
+use Core\Lucid\Contracts\ModelInterface;
+use Core\Lucid\QueryBuilder;
 
 
 abstract class Model implements ModelInterface {

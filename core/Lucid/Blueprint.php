@@ -1,5 +1,5 @@
 <?php
-namespace Lucid;
+namespace Core\Lucid;
 
 class Blueprint {
     private string $table;

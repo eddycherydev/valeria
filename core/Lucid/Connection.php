@@ -1,5 +1,5 @@
 <?php
-namespace Lucid;
+namespace Core\Lucid;
 
 use PDO;
 use PDOException;
@@ -13,7 +13,7 @@ class Connection
 
     public function __construct()
     {
-        Env::load(__DIR__ . '/../.env'); // o ajusta la ruta
+        Env::load(__DIR__ . '/../../.env'); // o ajusta la ruta
 
         $dsn = Env::get('DB_CONNECTION', 'mysql') . 
               ":host=" . Env::get('DB_HOST', '127.0.0.1') .

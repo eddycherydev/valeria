@@ -1,6 +1,6 @@
 <?php
-use Lucid\Schema;
-use Lucid\Blueprint;
+use Core\Lucid\Schema;
+use Core\Lucid\Blueprint;
 
 
 

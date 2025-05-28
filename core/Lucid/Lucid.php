@@ -1,7 +1,7 @@
 <?php
-namespace Lucid;
+namespace Core\Lucid;
 
-use Lucid\Connection;
+use Core\Lucid\Connection;
 
 class Lucid
 {

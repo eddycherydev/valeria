@@ -1,5 +1,5 @@
 <?php
-namespace Lucid\Commands;
+namespace Core\Lucid\Commands;
 
 class MakeModelCommand {
     public function handle(string $modelName): void {
@@ -9,7 +9,7 @@ class MakeModelCommand {
 <?php
 namespace App\Models;
 
-use Lucid\Model;
+use Core\Lucid\Model;
 
 class $modelName extends Model {
     protected static string \$table = '$tableName';
