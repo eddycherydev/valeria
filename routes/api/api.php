@@ -14,6 +14,7 @@ Router::post('/login', [Auth::class, 'login']);
 Router::post('/ask', [HelloController::class, 'askAgent']);
 
 
+
 Router::get('/docs/lucid', [DocumentationController::class, 'lucid']);
 Router::get('/docs/templateEngine', [DocumentationController::class, 'templateEngine']);
 
@@ -22,7 +23,11 @@ Router::macro('admin', function ($uri, $action) {
     Router::get("/admin/$uri", $action);
 });
 
-Router::admin('home', [HelloController::class, 'home']);
+Router::middleware(['auth'], function () {
+    Router::admin('home', [HelloController::class, 'home']);
+});
+
+
 
 
 
