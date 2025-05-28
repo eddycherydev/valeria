@@ -1,7 +1,6 @@
 {
     "require": {
         "firebase/php-jwt": "^6.11",
-        "picocss/pico": "^2.1",
-        "jenssegers/blade": "^1.4"
+        "picocss/pico": "^2.1"
     }
 }
