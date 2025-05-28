@@ -14,8 +14,9 @@
 - **Middleware support**
 - Modular architecture and extensible
 
-## 📂 To Install the framework
-- Clone Repository
-- remove extention **(.txt)** from **.env.txt** 
-- Config **.env** file
-- That's it ! :)
+## 📂 To Install the Framework
+
+1. Clone the repository
+2. Remove the `.txt` extension from the `.env.txt` file
+3. Configure your `.env` file with your database and environment settings
+4. That's it! You're ready to define clean, expressive routes with ease 🚀✨
