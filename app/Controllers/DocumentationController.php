@@ -36,10 +36,7 @@ class DocumentationController
     }
 
     
-    public function templateEngine()
-    {  
-       View::render('documentation/templateEngine', ['name' => 'Valeria']);
-    }
+   
 
 
     

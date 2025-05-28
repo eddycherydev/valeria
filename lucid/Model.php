@@ -2,6 +2,8 @@
 namespace Lucid;
 
 use Lucid\Contracts\ModelInterface;
+use Lucid\QueryBuilder;
+
 
 abstract class Model implements ModelInterface {
     protected static string $table;
@@ -28,14 +30,41 @@ abstract class Model implements ModelInterface {
     }
 
     public static function find(int $id): ?self {
-        $connection = Connection::getInstance();
         $result = QueryBuilder::table(static::$table)->where('id', $id)->first();
         if ($result) {
-            $model = new static((array)$result);
-            $model->exists = true;
-            return $model;
+            return (new static((array)$result))->markAsExists();
         }
         return null;
+    }
+
+    public static function where(string $column, $value): QueryBuilder {
+        return QueryBuilder::table(static::$table)->where($column, $value);
+    }
+
+    public static function orderBy(string $column, string $direction = 'ASC'): QueryBuilder {
+        return QueryBuilder::table(static::$table)->orderBy($column, $direction);
+    }
+
+    public static function groupBy(string ...$columns): QueryBuilder {
+        return QueryBuilder::table(static::$table)->groupBy(...$columns);
+    }
+
+    public static function limit(int $limit): QueryBuilder {
+        return QueryBuilder::table(static::$table)->limit($limit);
+    }
+
+    public static function all(): array {
+        return static::getFromQueryBuilder(QueryBuilder::table(static::$table));
+    }
+
+    public static function getFromQueryBuilder(QueryBuilder $query): array {
+        $results = $query->get();
+        return array_map(fn($row) => (new static((array)$row))->markAsExists(), $results);
+    }
+
+    protected function markAsExists(): self {
+        $this->exists = true;
+        return $this;
     }
 
     public function __get($key) {
