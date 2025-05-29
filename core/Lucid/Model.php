@@ -74,4 +74,23 @@ abstract class Model implements ModelInterface {
     public function __set($key, $value) {
         $this->attributes[$key] = $value;
     }
+
+    public function belongsTo(string $relatedClass, ?string $foreignKey = null): ?Model
+    {
+        $foreignKey ??= strtolower((new \ReflectionClass($relatedClass))->getShortName()) . '_id';
+        return $relatedClass::find($this->$foreignKey);
+    }
+
+        public function hasOne(string $relatedClass, ?string $foreignKey = null): ?Model
+    {
+        $foreignKey ??= strtolower((new \ReflectionClass($this))->getShortName()) . '_id';
+        return $relatedClass::where($foreignKey, $this->id)->first();
+    }
+    public function hasMany(string $relatedClass, ?string $foreignKey = null): array
+    {
+        $foreignKey ??= strtolower((new \ReflectionClass($this))->getShortName()) . '_id';
+        return $relatedClass::where($foreignKey, $this->id)->get();
+    }
+
+    
 }

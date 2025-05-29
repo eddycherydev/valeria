@@ -27,6 +27,7 @@ class HelloController
         //     echo "Usuario no encontrado.";
         // }
         
+        
         $user = User::where('email', 'admin1@example.com')->first();
         var_dump($user);
 
@@ -42,10 +43,12 @@ class HelloController
     }
 
 
-    public function home()
+    public function home($id)
     {  
-       View::render('home/home', ['name' => 'Valeria'], 'layouts/layout');
+
+       View::render('home/home', ['name' => 'Valeria '.$id], 'layouts/layout');
     }
+   
 
 
     

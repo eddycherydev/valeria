@@ -12,6 +12,7 @@ Router::post('/login', [LoginController::class, 'login']);
 Router::get('/logout', [LoginController::class, 'logout']);
 
 Router::middleware(['webAuth'], function () {
-    Router::get('/home', [HelloController::class, 'home']);
 });
+Router::get('/home/{id}', [HelloController::class, 'home']);
+Router::get('/home', [HelloController::class, 'home']);
 
