@@ -7,7 +7,7 @@
 </section>
 
 <section id="funciones">
-  <h2>¿Por qué Vlex?</h2>
+  <h2>Hola <?php echo $name?></h2>
   <ul>
     <li>Sintaxis sencilla</li>
     
