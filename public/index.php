@@ -8,6 +8,8 @@ require_once __DIR__ . '/../core/helpers.php';
 use Core\RouteLoader;
 use Core\Router;
 
+
+
 // Cargar todas las rutas API automáticamente
 RouteLoader::loadDirectory(__DIR__ . '/../routes/api');
 
