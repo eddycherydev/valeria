@@ -1,15 +1,15 @@
 <?php
 namespace App\Controllers;
-use Core\Vlex;
 use App\Models\User;
 
 use Core\Attributes\Middleware;
 use Core\Lucid\QueryBuilder;
+use Core\View;
 
 
 class HelloController
 {
-    #[Middleware('auth')]
+    // #[Middleware('auth')]
     public function askAgent()
     {
         // $user = new User([
@@ -27,13 +27,9 @@ class HelloController
         //     echo "Usuario no encontrado.";
         // }
         
-        $user = QueryBuilder::table('users')
-            ->where('email', 'admin1@example.com')
-            ->first();
+        $user = User::where('email', 'admin1@example.com')->first();
+        var_dump($user);
 
-        if ($user) {
-            echo $user->name;
-}
     }
 
     // #[Middleware('auth')]
@@ -48,7 +44,7 @@ class HelloController
 
     public function home()
     {  
-       Vlex::render('home/home', ['name' => 'Valeria'], 'layout.vlex');
+       View::render('home/home', ['name' => 'Valeria'], 'layouts/layout');
     }
 
 

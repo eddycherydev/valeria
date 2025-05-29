@@ -23,9 +23,6 @@ Router::macro('admin', function ($uri, $action) {
     Router::get("/admin/$uri", $action);
 });
 
-Router::middleware(['auth'], function () {
-    Router::admin('home', [HelloController::class, 'home']);
-});
 
 
 

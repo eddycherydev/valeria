@@ -2,9 +2,13 @@
 
 use Core\Router;
 
+use App\Controllers\LoginController;
 use App\Controllers\HelloController;
 
 
-Router::get('/home', [HelloController::class, 'home']);
 
+Router::get('/login', [LoginController::class, 'showLogin']);
+Router::middleware(['webAuth'], function () {
+    Router::get('/home', [HelloController::class, 'home']);
+});
 
