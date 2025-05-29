@@ -1,4 +1,4 @@
-@section('content')
+<?php section('content')?>
    
 <section>
   <h1>Bienvenido a VlexLand 🚀</h1>
@@ -9,8 +9,8 @@
 <section id="funciones">
   <h2>¿Por qué Vlex?</h2>
   <ul>
-    <li>Sintaxis sencilla como Blade</li>
-    <li>Componentes reutilizables</li>
+    <li>Sintaxis sencilla</li>
+    
     <li>Zero dependencies</li>
     <li> Hecho por ti 😎</li>
   </ul>
@@ -29,4 +29,4 @@
   </form>
 </section>
 
-@endsection
+<?php endsection()?>

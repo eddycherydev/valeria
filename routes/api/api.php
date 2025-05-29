@@ -10,7 +10,6 @@ use App\Controllers\DocumentationController;
 
 
 Router::get('/', [HelloController::class, 'index']);
-Router::post('/login', [Auth::class, 'login']);
 Router::post('/ask', [HelloController::class, 'askAgent']);
 
 

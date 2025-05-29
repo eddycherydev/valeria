@@ -21,10 +21,10 @@ class LoginController
 
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
-
         $user = User::where('email',$email)->first();
+        
 
-        if (!$user || !$user->checkPassword($password)) {
+        if (!$user || !password_verify($password, $user->password)) {
             $_SESSION['error'] = 'Credenciales inválidas';
             header('Location: /login');
             return;
