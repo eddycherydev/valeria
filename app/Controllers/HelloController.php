@@ -9,26 +9,27 @@ use Core\View;
 
 class HelloController
 {
-    // #[Middleware('auth')]
+    #[Middleware('auth')]
     public function askAgent()
     {
         // $user = new User([
-        //     'email' => 'admin1@example.com',
+        //     'email' => 'admin2@example.com',
+        //     'name' => 'usuario'.rand(),
         //     'password' => password_hash('123456', PASSWORD_DEFAULT)
         // ]);
 
         // $user->save();
 
-        // $user = User::find(1);
+        // $user = User::find(2);
 
         // if ($user) {
-        //     echo $user->email;
+        //     var_dump($user);
         // } else {
         //     echo "Usuario no encontrado.";
         // }
         
         
-        $user = User::where('email', 'admin1@example.com')->first();
+        $user = User::where('email', 'admin2@example.com')->first();
         var_dump($user);
 
     }
