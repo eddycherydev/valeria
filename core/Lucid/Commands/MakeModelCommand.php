@@ -19,19 +19,19 @@ PHP;
         $directory = __DIR__ . '/../../app/Models/';
         $filePath = $directory . $modelName . '.php';
 
-        // Crear la carpeta si no existe
+        // Create the folder if it doesn't exist
         if (!is_dir($directory)) {
             mkdir($directory, 0755, true);
            // echo "Directorio app/Models creado.\n";
         }
 
-        // Evitar sobrescribir si ya existe
+        // Avoid overwriting if it already exists
         if (file_exists($filePath)) {
-            echo "El modelo $modelName ya existe. Operación cancelada.\n";
+            echo "The model $modelName already exists. Operation cancelled.\n";
             return;
         }
 
         file_put_contents($filePath, $modelTemplate);
-        echo "Modelo $modelName creado en app/Models.\n";
+        echo "Model $modelName created in app/Models.\n";
     }
 }

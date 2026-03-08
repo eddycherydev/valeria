@@ -80,7 +80,7 @@ class Router {
 
                 foreach ($middlewares as $mw) {
                     $mwClass = "App\\Middleware\\" . ucfirst($mw) . "Middleware";
-                    if (class_exists($mwClass)) {
+                    if (class_exists($mwClass) && is_subclass_of($mwClass, \Core\Contracts\MiddlewareInterface::class)) {
                         (new $mwClass())->handle();
                     }
                 }
@@ -93,7 +93,8 @@ class Router {
         }
 
         http_response_code(404);
-        echo json_encode(['error' => 'Ruta no encontrada']);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['error' => 'Route not found']);
     }
 
     protected static function matchRoute(string $routePattern, string $uri)

@@ -1,20 +1,19 @@
 <?php
 namespace App\Middleware;
 
-class WebAuthMiddleware
+use Core\Contracts\MiddlewareInterface;
+
+class WebAuthMiddleware implements MiddlewareInterface
 {
-    public function handle()
+    public function handle(): void
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
         if (empty($_SESSION['user_id'])) {
-            // Redirigir a login si no está autenticado
             header('Location: /login');
             exit;
         }
-
-        // Si quieres, puedes añadir lógica para verificar roles, expiración, etc.
-        // Ejemplo:
-        // if ($_SESSION['role'] !== 'admin') { ... }
     }
 }

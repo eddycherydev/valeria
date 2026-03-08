@@ -5,6 +5,12 @@ use Core\Lucid\Connection;
 use PDO;
 
 class RollbackCommand {
+    private static function migrationsPath(): string
+    {
+        $root = defined('PROJECT_ROOT') ? PROJECT_ROOT : (__DIR__ . '/../../..');
+        return rtrim($root, DIRECTORY_SEPARATOR) . '/database/migrations';
+    }
+
     public function handle(): void {
         $pdo = Connection::getInstance()->getPDO();
 
@@ -26,7 +32,7 @@ class RollbackCommand {
         rsort($migrations);
 
         foreach ($migrations as $migrationName) {
-            $file = __DIR__ . '/../../database/migrations/' . $migrationName;
+            $file = self::migrationsPath() . '/' . $migrationName;
             if (!file_exists($file)) {
                 echo "Archivo de migración $migrationName no encontrado, se omite.\n";
                 continue;

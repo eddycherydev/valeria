@@ -19,14 +19,24 @@ abstract class Model implements ModelInterface {
     }
 
     public function save(): bool {
-        $connection = Connection::getInstance();
         if ($this->exists) {
-            $query = QueryBuilder::table(static::$table)->where('id', $this->attributes['id'])->update($this->attributes);
-        } else {
-            $query = QueryBuilder::table(static::$table)->insert($this->attributes);
+            $id = $this->attributes['id'] ?? null;
+            if ($id === null) {
+                return false;
+            }
+            $data = $this->attributes;
+            unset($data['id']);
+            return QueryBuilder::table(static::$table)->where('id', $id)->update($data);
+        }
+        $ok = QueryBuilder::table(static::$table)->insert($this->attributes);
+        if ($ok) {
+            $newId = (int) Connection::getInstance()->getPDO()->lastInsertId();
+            if ($newId > 0) {
+                $this->attributes['id'] = $newId;
+            }
             $this->exists = true;
         }
-        return $query;
+        return $ok;
     }
 
     public static function find(int $id): ?self {

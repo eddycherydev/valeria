@@ -22,11 +22,8 @@ Router::post('/login', [LoginController::class, 'login']);
 Router::get('/logout', [LoginController::class, 'logout']);
 
 Router::middleware(['webAuth'], function () {
+    Router::get('/home', [LoginController::class, 'redirectToHome']);
+    Router::admin('/home/{id}', [HelloController::class, 'home']);
 });
-
-
-
-
-Router::admin('/home/{id}', [HelloController::class, 'home']);
 
 

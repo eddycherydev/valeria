@@ -26,7 +26,11 @@ class Blueprint {
     }
 
     public function toSql(): string {
-        $cols = implode(", ", $this->columns);
+        $parts = $this->columns;
+        if (!empty($this->foreignKeys)) {
+            $parts = array_merge($parts, $this->foreignKeys);
+        }
+        $cols = implode(", ", $parts);
         return "CREATE TABLE IF NOT EXISTS {$this->table} ({$cols});";
     }
 

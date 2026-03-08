@@ -1,10 +1,12 @@
 <?php
 namespace App\Middleware;
 
-class LogMiddleware
+use Core\Contracts\MiddlewareInterface;
+
+class LogMiddleware implements MiddlewareInterface
 {
-    public function handle()
+    public function handle(): void
     {
-        error_log("Middleware ejecutado: " . date("Y-m-d H:i:s"));
+        error_log("Middleware executed: " . date("Y-m-d H:i:s"));
     }
 }

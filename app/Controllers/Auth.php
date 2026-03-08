@@ -1,42 +1,46 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\User;
+use Core\Env;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 class Auth
 {
-    private $secret_key = 'mi_secreto_ultra_seguro_123!'; // Cambia por algo seguro
-
-    public function login()
+    public function login(): void
     {
-        $data = json_decode(file_get_contents('php://input'), true);
+        $secret = Env::get('JWT_SECRET');
+        if (empty($secret)) {
+            http_response_code(500);
+            echo json_encode(['error' => 'JWT_SECRET no configurado en .env']);
+            return;
+        }
 
+        $data = json_decode(file_get_contents('php://input'), true) ?? [];
         $email = $data['email'] ?? '';
         $password = $data['password'] ?? '';
 
-        // Usuario simulado - reemplaza con base de datos
-        $validUser = 'admin@example.com';
-        $validPass = '123456';
-
-        if ($email === $validUser && $password === $validPass) {
-            $payload = [
-                'iss' => 'tu-api',         // issuer
-                'iat' => time(),           // issued at
-                'exp' => time() + 3600,    // expiración 1 hora
-                'sub' => $email,           // subject (usuario)
-            ];
-
-            $jwt = JWT::encode($payload, $this->secret_key, 'HS256');
-
-            echo json_encode([
-                'token' => $jwt,
-                'expires_in' => 3600,
-                'message' => 'Autenticación exitosa'
-            ]);
-        } else {
+        $user = User::where('email', $email)->first();
+        if (!$user || !password_verify($password, $user->password)) {
             http_response_code(401);
             echo json_encode(['error' => 'Credenciales inválidas']);
+            return;
         }
+
+        $payload = [
+            'iss' => Env::get('APP_URL', 'valeria-api'),
+            'iat' => time(),
+            'exp' => time() + 3600,
+            'sub' => (string) $user->id,
+        ];
+
+        $jwt = JWT::encode($payload, $secret, 'HS256');
+
+        echo json_encode([
+            'token' => $jwt,
+            'expires_in' => 3600,
+            'message' => 'Autenticación exitosa',
+        ]);
     }
 }

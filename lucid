@@ -1,0 +1,57 @@
+#!/usr/bin/env php
+<?php
+/**
+ * CLI de Lucid (Valeria Framework)
+ * Uso:
+ *   php lucid make:migration nombre_de_la_migracion
+ *   php lucid migrate
+ *   php lucid rollback
+ */
+
+$baseDir = __DIR__;
+if (!defined('PROJECT_ROOT')) {
+    define('PROJECT_ROOT', $baseDir);
+}
+
+require_once $baseDir . '/vendor/autoload.php';
+require_once $baseDir . '/core/autoload.php';
+
+// Cargar .env
+$envPath = $baseDir;
+if (is_dir($envPath)) {
+    try {
+        \Core\Env::load($envPath);
+    } catch (Throwable $e) {
+        fwrite(STDERR, "Advertencia: no se pudo cargar .env: " . $e->getMessage() . "\n");
+    }
+}
+
+$command = $argv[1] ?? null;
+$arg = $argv[2] ?? null;
+
+if (!$command) {
+    echo "Uso:\n";
+    echo "  php lucid make:migration <nombre>   Crea una nueva migración\n";
+    echo "  php lucid migrate                   Ejecuta migraciones pendientes\n";
+    echo "  php lucid rollback                  Revierte el último batch de migraciones\n";
+    exit(1);
+}
+
+switch ($command) {
+    case 'make:migration':
+        if (empty($arg)) {
+            fwrite(STDERR, "Indica el nombre de la migración. Ejemplo: php lucid make:migration create_posts_table\n");
+            exit(1);
+        }
+        (new \Core\Lucid\Commands\MakeMigrationCommand())->handle($arg);
+        break;
+    case 'migrate':
+        (new \Core\Lucid\Commands\MigrateCommand())->handle();
+        break;
+    case 'rollback':
+        (new \Core\Lucid\Commands\RollbackCommand())->handle();
+        break;
+    default:
+        fwrite(STDERR, "Comando desconocido: $command\n");
+        exit(1);
+}

@@ -5,6 +5,12 @@ use Core\Lucid\Connection;
 use PDO;
 
 class MigrateCommand {
+    private static function migrationsPath(): string
+    {
+        $root = defined('PROJECT_ROOT') ? PROJECT_ROOT : (__DIR__ . '/../../..');
+        return rtrim($root, DIRECTORY_SEPARATOR) . '/database/migrations';
+    }
+
     public function handle(): void {
         $pdo = Connection::getInstance()->getPDO();
 
@@ -22,8 +28,8 @@ class MigrateCommand {
         $stmt = $pdo->query("SELECT migration FROM migrations");
         $executed = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-        // Archivos de migraciones ordenados
-        $files = glob(__DIR__ . '/../../database/migrations/*.php');
+        // Archivos de migraciones ordenados (raíz del proyecto)
+        $files = glob(self::migrationsPath() . '/*.php');
         sort($files);
 
         // Último batch
