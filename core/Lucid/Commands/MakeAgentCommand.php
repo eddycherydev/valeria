@@ -27,7 +27,7 @@ class MakeAgentCommand
 
 namespace App\Agents;
 
-use Core\AgentProfile;
+use Core\Agent\AgentProfile;
 
 class $className extends AgentProfile
 {

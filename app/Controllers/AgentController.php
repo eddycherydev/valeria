@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use Core\Agent;
+use Core\Agent\Agent;
 use Core\AI\Config as AIConfig;
 
 class AgentController

@@ -2,7 +2,7 @@
 
 namespace Core\AI;
 
-use Core\Env;
+use Core\Support\Env;
 
 /**
  * Loads config/ai.php and provides access to default provider, models, and LLM creation.

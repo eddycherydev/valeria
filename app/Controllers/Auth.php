@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
-use Core\Env;
+use Core\Support\Env;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 

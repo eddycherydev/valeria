@@ -2,7 +2,7 @@
 
 namespace Core\Lucid\Commands;
 
-use Core\Agent;
+use Core\Agent\Agent;
 
 class AgentRunCommand
 {

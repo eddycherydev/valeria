@@ -20,7 +20,7 @@ require_once $baseDir . '/core/autoload.php';
 $envPath = $baseDir;
 if (is_dir($envPath)) {
     try {
-        \Core\Env::load($envPath);
+        \Core\Support\Env::load($envPath);
     } catch (Throwable $e) {
         fwrite(STDERR, "Warning: could not load .env: " . $e->getMessage() . "\n");
     }

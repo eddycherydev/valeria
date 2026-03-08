@@ -1,15 +1,11 @@
 <?php
 
-namespace Core;
+namespace Core\Agent;
 
 use Core\AI\Config as AIConfig;
 use Core\AI\LLMInterface;
 use Core\AI\Prompt;
 
-/**
- * Orchestrator: runs skills by name or delegates to an LLM with skills in context.
- * LLM and model come from config/ai.php unless you pass a custom LLM.
- */
 class Agent
 {
     private ?LLMInterface $llm = null;
@@ -20,8 +16,6 @@ class Agent
     }
 
     /**
-     * Run a single skill by name. No LLM involved.
-     *
      * @param array<string, mixed> $input
      * @return array{success: bool, result?: mixed, error?: string}
      */
@@ -30,19 +24,11 @@ class Agent
         return SkillRegistry::run($skillName, $input);
     }
 
-    /**
-     * Chat with the LLM (default prompt and all skills).
-     * If no API key, returns a message suggesting to run a skill instead.
-     */
     public function chat(string $message, bool $includeSkillsInContext = true): array
     {
         return $this->chatWithAgent(null, $message, $includeSkillsInContext);
     }
 
-    /**
-     * Chat using a registered agent profile by name (app/Agents/).
-     * Uses the profile's systemPrompt() and allowedSkills(); if agent name is null, uses default.
-     */
     public function chatWithAgent(?string $agentName, string $message, bool $includeSkillsInContext = true): array
     {
         if (!$this->llm->isAvailable()) {
@@ -88,9 +74,7 @@ class Agent
         return Prompt::load('agent.system');
     }
 
-    /**
-     * @param array<string>|null $allowedSkills
-     */
+    /** @param array<string>|null $allowedSkills */
     private function resolveAllowedSkills(?string $agentName): ?array
     {
         if ($agentName !== null && $agentName !== '') {
@@ -102,29 +86,19 @@ class Agent
         return null;
     }
 
-    /**
-     * List all registered skills (for CLI or API).
-     *
-     * @return array<int, array{name: string, description: string, parameters: array<string>}>
-     */
+    /** @return array<int, array{name: string, description: string, parameters: array<string>}> */
     public function listSkills(): array
     {
         return SkillRegistry::list();
     }
 
-    /**
-     * List all registered agent profiles (app/Agents/).
-     *
-     * @return array<int, array{name: string, systemPrompt: string, allowedSkills: array|null}>
-     */
+    /** @return array<int, array{name: string, systemPrompt: string, allowedSkills: array|null}> */
     public function listAgents(): array
     {
         return AgentRegistry::list();
     }
 
-    /**
-     * @param array<string>|null $allowedSkills If set, only these skill names are included; otherwise all.
-     */
+    /** @param array<string>|null $allowedSkills */
     private function skillsListForResponse(?array $allowedSkills = null): string
     {
         $list = SkillRegistry::list();

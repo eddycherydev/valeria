@@ -1,13 +1,13 @@
 <?php
 
-namespace Core;
+namespace Core\View;
 
 class View
 {
     protected static $sections = [];
     protected static $viewContent = '';
 
-    public static function render(string $view, array $data = [], string $layout = null): void
+    public static function render(string $view, array $data = [], ?string $layout = null): void
     {
         self::$sections = [];
         self::$viewContent = self::getViewFile($view, $data);
@@ -21,7 +21,8 @@ class View
 
     protected static function getViewFile(string $file, array $data): string
     {
-        $path = __DIR__ . '/../app/Views/' . $file . '.php';
+        $baseDir = defined('PROJECT_ROOT') ? PROJECT_ROOT : (__DIR__ . '/../..');
+        $path = rtrim($baseDir, DIRECTORY_SEPARATOR) . '/app/Views/' . $file . '.php';
 
         if (!file_exists($path)) {
             throw new \Exception("View not found: $file");

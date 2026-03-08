@@ -168,7 +168,7 @@ $text = Prompt::load('agent.system', ['context' => '...']);
 ## Using the Agent in code
 
 ```php
-use Core\Agent;
+use Core\Agent\Agent;
 
 $agent = new Agent();
 
@@ -191,7 +191,7 @@ $agents = $agent->listAgents();
 Inject a different provider:
 
 ```php
-use Core\Agent;
+use Core\Agent\Agent;
 use Core\AI\LLMInterface;
 
 class MyLLM implements LLMInterface {

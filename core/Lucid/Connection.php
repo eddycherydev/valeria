@@ -4,7 +4,7 @@ namespace Core\Lucid;
 use PDO;
 use PDOException;
 
-use Core\Env;
+use Core\Support\Env;
 
 class Connection
 {

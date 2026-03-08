@@ -2,11 +2,13 @@
 
 ## Rendering
 
-Views are PHP files under `app/Views/`. Use `Core\View` to render them.
+Views are PHP files under `app/Views/`. Use `Core\View\View` to render them.
 
 **Without layout:**
 
 ```php
+use Core\View\View;
+
 View::render('home/home', ['name' => 'Valeria']);
 ```
 

@@ -2,7 +2,7 @@
 
 namespace Core\AI;
 
-use Core\Env;
+use Core\Support\Env;
 
 /**
  * OpenAI-compatible chat API (OpenAI, Azure OpenAI, or local proxies).

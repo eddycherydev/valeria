@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Agent;
 
 use Core\Contracts\SkillInterface;
 
@@ -9,9 +9,6 @@ class SkillRegistry
     private static array $skills = [];
     private static bool $discovered = false;
 
-    /**
-     * Register a skill class. Called automatically during discover() for app/Skills/*.
-     */
     public static function register(string $className): void
     {
         if (!is_subclass_of($className, SkillInterface::class)) {
@@ -21,15 +18,12 @@ class SkillRegistry
         self::$skills[$name] = $className;
     }
 
-    /**
-     * Discover and register all skills in app/Skills/.
-     */
     public static function discover(): void
     {
         if (self::$discovered) {
             return;
         }
-        $baseDir = defined('PROJECT_ROOT') ? PROJECT_ROOT : (__DIR__ . '/..');
+        $baseDir = defined('PROJECT_ROOT') ? PROJECT_ROOT : (__DIR__ . '/../..');
         $path = rtrim($baseDir, DIRECTORY_SEPARATOR) . '/app/Skills';
         if (!is_dir($path)) {
             self::$discovered = true;
@@ -44,9 +38,6 @@ class SkillRegistry
         self::$discovered = true;
     }
 
-    /**
-     * Get a skill instance by name.
-     */
     public static function get(string $name): ?SkillInterface
     {
         self::discover();
@@ -58,8 +49,6 @@ class SkillRegistry
     }
 
     /**
-     * Execute a skill by name with the given input.
-     *
      * @param array<string, mixed> $input
      * @return array{success: bool, result?: mixed, error?: string}
      */
@@ -73,8 +62,6 @@ class SkillRegistry
     }
 
     /**
-     * List all registered skills with name, description, and parameters.
-     *
      * @return array<int, array{name: string, description: string, parameters: array<string>}>
      */
     public static function list(): array

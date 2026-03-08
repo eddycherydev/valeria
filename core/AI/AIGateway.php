@@ -2,7 +2,7 @@
 
 namespace Core\AI;
 
-use Core\Env;
+use Core\Support\Env;
 
 /**
  * Gateway: single entry point for LLM calls. Routes by model, fallback, cache, rate limit.

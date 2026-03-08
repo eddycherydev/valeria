@@ -2,7 +2,7 @@
 namespace App\Middleware;
 
 use Core\Contracts\MiddlewareInterface;
-use Core\Env;
+use Core\Support\Env;
 
 class AuthMiddleware implements MiddlewareInterface
 {

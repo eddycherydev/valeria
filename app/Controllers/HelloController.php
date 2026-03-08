@@ -4,7 +4,7 @@ use App\Models\User;
 
 use Core\Attributes\Middleware;
 use Core\Lucid\QueryBuilder;
-use Core\View;
+use Core\View\View;
 
 
 class HelloController

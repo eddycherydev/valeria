@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Agent;
 
 use Core\Contracts\AgentProfileInterface;
 
@@ -23,7 +23,7 @@ class AgentRegistry
         if (self::$discovered) {
             return;
         }
-        $baseDir = defined('PROJECT_ROOT') ? PROJECT_ROOT : (__DIR__ . '/..');
+        $baseDir = defined('PROJECT_ROOT') ? PROJECT_ROOT : (__DIR__ . '/../..');
         $path = rtrim($baseDir, DIRECTORY_SEPARATOR) . '/app/Agents';
         if (!is_dir($path)) {
             self::$discovered = true;

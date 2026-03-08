@@ -9,11 +9,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../core/autoload.php';
 require_once __DIR__ . '/../core/helpers.php';
 
-// Cargar .env al inicio para que Env::get() esté disponible en toda la app
-\Core\Env::load(__DIR__ . '/..');
+\Core\Support\Env::load(__DIR__ . '/..');
 
-use Core\RouteLoader;
-use Core\Router;
+use Core\Http\RouteLoader;
+use Core\Http\Router;
 
 // Cargar todas las rutas API automáticamente
 RouteLoader::loadDirectory(__DIR__ . '/../routes/api');

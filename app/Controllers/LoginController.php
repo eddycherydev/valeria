@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
-use Core\View;
+use Core\View\View;
 
 class LoginController
 {

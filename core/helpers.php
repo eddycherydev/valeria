@@ -1,7 +1,7 @@
 <?php
 
 
-use Core\View;
+use Core\View\View;
 
 function section(string $name)
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Agent;
 
 use Core\Contracts\AgentProfileInterface;
 
@@ -11,6 +11,6 @@ abstract class AgentProfile implements AgentProfileInterface
 {
     public static function allowedSkills(): ?array
     {
-        return null; // null = all skills allowed
+        return null;
     }
 }

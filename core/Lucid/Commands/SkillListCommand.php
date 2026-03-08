@@ -2,7 +2,7 @@
 
 namespace Core\Lucid\Commands;
 
-use Core\SkillRegistry;
+use Core\Agent\SkillRegistry;
 
 class SkillListCommand
 {

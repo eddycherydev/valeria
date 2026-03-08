@@ -37,10 +37,14 @@ valeria/
 │   └── Views/
 ├── config/                 # App config, prompts
 ├── core/                   # Framework core (Valeria + Lucid)
+│   ├── Agent/              # Agent, SkillRegistry, AgentRegistry, AgentProfile
+│   ├── AI/                 # LLM, Gateway, Config, Prompt
 │   ├── Attributes/
 │   ├── Contracts/
+│   ├── Http/               # Router, RouteLoader
 │   ├── Lucid/              # ORM, migrations, commands
-│   └── ...
+│   ├── Support/            # Env, Macroable
+│   └── View/               # View
 ├── database/
 │   └── migrations/
 ├── docs/                   # Documentation
@@ -64,7 +68,7 @@ The web entry point is `public/index.php`. The `database/` folder is at the proj
 **Routes** — Edit `routes/web/web.php` or `routes/api/api.php`:
 
 ```php
-use Core\Router;
+use Core\Http\Router;
 use App\Controllers\HelloController;
 
 Router::get('/', [HelloController::class, 'index']);

@@ -1,6 +1,6 @@
 <?php
 
-use Core\Router;
+use Core\Http\Router;
 
 use App\Controllers\LoginController;
 use App\Controllers\HelloController;

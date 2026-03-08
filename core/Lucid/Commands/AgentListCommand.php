@@ -2,7 +2,7 @@
 
 namespace Core\Lucid\Commands;
 
-use Core\AgentRegistry;
+use Core\Agent\AgentRegistry;
 
 class AgentListCommand
 {

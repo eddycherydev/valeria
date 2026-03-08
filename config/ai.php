@@ -3,6 +3,7 @@
 /**
  * AI / LLM configuration. Edit here to change models, providers, and defaults.
  * API keys stay in .env (see 'env_key' per provider); do not put secrets in this file.
+ *
  */
 return [
     /*

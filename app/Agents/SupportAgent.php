@@ -2,7 +2,7 @@
 
 namespace App\Agents;
 
-use Core\AgentProfile;
+use Core\Agent\AgentProfile;
 
 class SupportAgent extends AgentProfile
 {

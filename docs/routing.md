@@ -4,7 +4,7 @@
 
 Routes are defined in PHP files under `routes/web/` and `routes/api/`. `public/index.php` loads all files in those directories via `RouteLoader::loadDirectory()`, so every `*/*.php` file is included (e.g. `routes/web/web.php`, `routes/api/api.php`).
 
-Define routes with `Core\Router`:
+Define routes with `Core\Http\Router`:
 
 - `Router::get($path, $callback)`
 - `Router::post($path, $callback)`

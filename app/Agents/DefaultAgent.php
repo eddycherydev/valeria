@@ -2,7 +2,7 @@
 
 namespace App\Agents;
 
-use Core\AgentProfile;
+use Core\Agent\AgentProfile;
 
 /**
  * Default agent used when no agent name is specified. Customize systemPrompt() as needed.
