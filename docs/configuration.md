@@ -36,15 +36,40 @@ DB_CHARSET=utf8mb4
 
 ## AI / Agent (optional)
 
-For the agent chat (LLM) feature, you can set:
+**Secrets** — Put only the API key in `.env`:
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `OPENAI_API_KEY` | (empty) | OpenAI (or compatible) API key |
-| `OPENAI_BASE_URL` | `https://api.openai.com` | Base URL (e.g. for Azure or a proxy) |
-| `OPENAI_MODEL` | `gpt-4o-mini` | Model name |
+| Variable | Description |
+|----------|-------------|
+| `OPENAI_API_KEY` | API key for OpenAI (or compatible) |
 
-Skills work without any of these; only `agent:run --message=...` and `POST /api/agent` with `{"message":"..."}` require the key.
+**Models and providers** — Edit `config/ai.php` to change the default provider, model, base URL, and temperature. That file is the single place to configure:
+
+- `default` — Which provider to use (e.g. `openai`, `openai_gpt4`)
+- `temperature` — Default 0.7 (0 = deterministic, 1 = more creative)
+- `providers` — List of providers, each with `class`, `model`, `base_url`, and `env_key` (the .env variable for the API key)
+
+Example: to use a different model, add or edit a provider in `config/ai.php`:
+
+```php
+'providers' => [
+    'openai' => [
+        'class' => \Core\AI\OpenAILLM::class,
+        'model' => 'gpt-4o-mini',
+        'base_url' => 'https://api.openai.com',
+        'env_key' => 'OPENAI_API_KEY',
+    ],
+    'openai_gpt4' => [
+        'class' => \Core\AI\OpenAILLM::class,
+        'model' => 'gpt-4o',
+        'base_url' => 'https://api.openai.com',
+        'env_key' => 'OPENAI_API_KEY',
+    ],
+],
+```
+
+Then set `'default' => 'openai_gpt4'` to use GPT-4 by default. The agent uses `Config::createLLM()` so it always reads from `config/ai.php`; the API key is still read from `.env` via `env_key`.
+
+**HTTP** — `GET /api/ai/config` returns the current AI config (default provider, temperature, and provider list with model/base_url only; no API keys).
 
 ## Using config in code
 

@@ -2,12 +2,13 @@
 
 namespace Core;
 
+use Core\AI\Config as AIConfig;
 use Core\AI\LLMInterface;
-use Core\AI\OpenAILLM;
 use Core\AI\Prompt;
 
 /**
  * Orchestrator: runs skills by name or delegates to an LLM with skills in context.
+ * LLM and model come from config/ai.php unless you pass a custom LLM.
  */
 class Agent
 {
@@ -15,7 +16,7 @@ class Agent
 
     public function __construct(?LLMInterface $llm = null)
     {
-        $this->llm = $llm ?? new OpenAILLM();
+        $this->llm = $llm ?? AIConfig::createLLM();
     }
 
     /**
@@ -63,8 +64,13 @@ class Agent
             ['role' => 'system', 'content' => $system],
             ['role' => 'user', 'content' => $message],
         ];
+        $options = [];
+        $temperature = AIConfig::get('temperature');
+        if ($temperature !== null) {
+            $options['temperature'] = (float) $temperature;
+        }
         try {
-            $reply = $this->llm->chat($messages);
+            $reply = $this->llm->chat($messages, $options);
             return ['success' => true, 'reply' => $reply];
         } catch (\Throwable $e) {
             return ['success' => false, 'error' => $e->getMessage()];

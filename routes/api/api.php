@@ -9,6 +9,7 @@ Router::macro('api', function ($uri, $action) {
     Router::post("/api$uri", $action);
 });
 
+Router::get('/api/ai/config', [AgentController::class, 'aiConfig']);
 Router::get('/api/skills', [AgentController::class, 'listSkills']);
 Router::get('/api/agents', [AgentController::class, 'listAgents']);
 Router::post('/api/agent', [AgentController::class, 'run']);

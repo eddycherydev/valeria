@@ -3,9 +3,31 @@
 namespace App\Controllers;
 
 use Core\Agent;
+use Core\AI\Config as AIConfig;
 
 class AgentController
 {
+    /**
+     * GET /api/ai/config — list AI config (default provider, providers and models). No secrets.
+     */
+    public function aiConfig(): void
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        $config = AIConfig::load();
+        $out = [
+            'default' => $config['default'] ?? 'openai',
+            'temperature' => $config['temperature'] ?? 0.7,
+            'providers' => [],
+        ];
+        foreach ($config['providers'] ?? [] as $name => $p) {
+            $out['providers'][$name] = [
+                'model' => $p['model'] ?? null,
+                'base_url' => $p['base_url'] ?? null,
+            ];
+        }
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    }
+
     /**
      * GET /api/skills — list registered skills (name, description, parameters).
      */

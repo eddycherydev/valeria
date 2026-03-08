@@ -108,6 +108,7 @@ From the project root:
 
 ## HTTP API
 
+- **GET /api/ai/config** — Returns AI config (default provider, temperature, providers with model and base_url; no API keys).
 - **GET /api/skills** — Returns a JSON list of skills (name, description, parameters).
 - **GET /api/agents** — Returns a JSON list of agent profiles (name, systemPrompt, allowedSkills).
 - **POST /api/agent** — Run a skill or chat (optional body field `agent` to select a profile).
@@ -138,13 +139,17 @@ Content-Type: application/json
 
 Omit `agent` to use the default system prompt; set `agent` to a registered name (e.g. `default`, `support`) to use that profile’s prompt and allowed skills. If `OPENAI_API_KEY` is not set, the chat response will indicate that and list available skills.
 
-## LLM (optional)
+## LLM and AI config
 
-To use the chat endpoint or `agent:run --message=...`, set in `.env`:
+Models and providers are configured in **`config/ai.php`** (not in `.env`). There you can:
 
-- `OPENAI_API_KEY` — Your API key.
-- `OPENAI_BASE_URL` — Optional; default `https://api.openai.com` (use for Azure or proxies).
-- `OPENAI_MODEL` — Optional; default `gpt-4o-mini`.
+- Set the **default provider** (e.g. `openai`, `openai_gpt4`).
+- Set **temperature** (default 0.7).
+- Define **providers** with `model`, `base_url`, and `env_key` (the .env variable for the API key).
+
+Only the API key goes in `.env` (e.g. `OPENAI_API_KEY`). Changing model or adding a provider is done by editing `config/ai.php`. See [Configuration](configuration.md#ai--agent-optional).
+
+**GET /api/ai/config** returns the current AI config (default, temperature, providers with model and base_url; no secrets).
 
 The agent injects the list of available skills into the system prompt so the model can suggest using them.
 
