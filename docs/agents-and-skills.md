@@ -149,7 +149,9 @@ Models and providers are configured in **`config/ai.php`** (not in `.env`). Ther
 
 Only the API key goes in `.env` (e.g. `OPENAI_API_KEY`). Changing model or adding a provider is done by editing `config/ai.php`. See [Configuration](configuration.md#ai--agent-optional).
 
-**GET /api/ai/config** returns the current AI config (default, temperature, providers with model and base_url; no secrets).
+**GET /api/ai/config** returns the current AI config (default, temperature, gateway status, providers; no secrets).
+
+**AI Gateway** — In `config/ai.php` you can enable the gateway (`gateway.enabled => true`) so that all LLM calls are routed by model, with optional fallback, cache, and rate limit. See [Configuration – AI Gateway](configuration.md#ai-gateway).
 
 The agent injects the list of available skills into the system prompt so the model can suggest using them.
 

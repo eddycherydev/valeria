@@ -14,9 +14,18 @@ class AgentController
     {
         header('Content-Type: application/json; charset=utf-8');
         $config = AIConfig::load();
+        $gateway = $config['gateway'] ?? null;
         $out = [
             'default' => $config['default'] ?? 'openai',
             'temperature' => $config['temperature'] ?? 0.7,
+            'gateway' => [
+                'enabled' => is_array($gateway) && !empty($gateway['enabled']),
+                'default_provider' => $gateway['default_provider'] ?? null,
+                'routing' => $gateway['routing'] ?? [],
+                'fallback' => $gateway['fallback'] ?? [],
+                'cache' => isset($gateway['cache']['enabled']) ? ['enabled' => (bool) $gateway['cache']['enabled'], 'ttl' => $gateway['cache']['ttl'] ?? 60] : ['enabled' => false],
+                'rate_limit' => isset($gateway['rate_limit']['requests_per_minute']) ? ['requests_per_minute' => (int) $gateway['rate_limit']['requests_per_minute']] : null,
+            ],
             'providers' => [],
         ];
         foreach ($config['providers'] ?? [] as $name => $p) {

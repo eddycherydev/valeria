@@ -13,7 +13,7 @@ class Auth
         $secret = Env::get('JWT_SECRET');
         if (empty($secret)) {
             http_response_code(500);
-            echo json_encode(['error' => 'JWT_SECRET no configurado en .env']);
+            echo json_encode(['error' => 'JWT_SECRET no configured in .env']);
             return;
         }
 
@@ -24,7 +24,7 @@ class Auth
         $user = User::where('email', $email)->first();
         if (!$user || !password_verify($password, $user->password)) {
             http_response_code(401);
-            echo json_encode(['error' => 'Credenciales inválidas']);
+            echo json_encode(['error' => 'Credentials invalid']);
             return;
         }
 
@@ -40,7 +40,7 @@ class Auth
         echo json_encode([
             'token' => $jwt,
             'expires_in' => 3600,
-            'message' => 'Autenticación exitosa',
+            'message' => 'Authentication successful',
         ]);
     }
 }

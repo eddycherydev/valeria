@@ -56,10 +56,16 @@ class Config
     }
 
     /**
-     * Build an LLM instance from a provider name. Uses config/ai.php + .env for API key.
+     * Build an LLM instance. If gateway is enabled in config, returns AIGateway; otherwise the direct provider.
      */
     public static function createLLM(?string $providerName = null): LLMInterface
     {
+        $config = self::load();
+        $gateway = $config['gateway'] ?? null;
+        if (is_array($gateway) && !empty($gateway['enabled'])) {
+            return new AIGateway();
+        }
+
         $name = $providerName ?? self::defaultProvider();
         $provider = self::getProvider($name);
         if ($provider === null) {

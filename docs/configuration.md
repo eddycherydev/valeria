@@ -69,7 +69,35 @@ Example: to use a different model, add or edit a provider in `config/ai.php`:
 
 Then set `'default' => 'openai_gpt4'` to use GPT-4 by default. The agent uses `Config::createLLM()` so it always reads from `config/ai.php`; the API key is still read from `.env` via `env_key`.
 
-**HTTP** — `GET /api/ai/config` returns the current AI config (default provider, temperature, and provider list with model/base_url only; no API keys).
+**HTTP** — `GET /api/ai/config` returns the current AI config (default provider, temperature, gateway status, and provider list with model/base_url only; no API keys).
+
+### AI Gateway
+
+When `config/ai.php` has `gateway.enabled => true`, all LLM calls go through the **AI Gateway** instead of a single provider. The gateway:
+
+- **Routes** by model: use the `gateway.routing` map (e.g. `gpt-4*` → `openai`, `llama*` → `ollama`) to choose the provider. Patterns support `*` as wildcard.
+- **Fallback**: if the chosen provider fails, it tries each provider in `gateway.fallback` in order.
+- **Cache** (optional): when `gateway.cache.enabled` is true, identical requests (same messages + model) are cached for `gateway.cache.ttl` seconds. Cache files are stored in `storage/ai-gateway/cache/`.
+- **Rate limit** (optional): when `gateway.rate_limit.requests_per_minute` is set, requests are limited per minute (tracked in `storage/ai-gateway/rate/`).
+
+Example gateway section in `config/ai.php`:
+
+```php
+'gateway' => [
+    'enabled' => true,
+    'default_provider' => 'openai',
+    'routing' => [
+        'gpt-4*' => 'openai',
+        'gpt-3.5*' => 'openai',
+        'llama*' => 'ollama',
+    ],
+    'fallback' => ['openai', 'ollama'],
+    'cache' => ['enabled' => true, 'ttl' => 60],
+    'rate_limit' => ['requests_per_minute' => 60],
+],
+```
+
+With the gateway disabled (`enabled => false`), the framework behaves as before: one provider per request, no cache or rate limit.
 
 ## Using config in code
 

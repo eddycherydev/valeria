@@ -23,6 +23,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | AI Gateway
+    |--------------------------------------------------------------------------
+    | When enabled, all LLM calls go through the gateway: routing by model,
+    | fallback to other providers on failure, optional cache and rate limit.
+    */
+    'gateway' => [
+        'enabled' => false,
+        'default_provider' => 'openai',
+        'routing' => [
+            'gpt-4*' => 'openai',
+            'gpt-3.5*' => 'openai',
+            'claude*' => 'anthropic',
+            'llama*' => 'ollama',
+        ],
+        'fallback' => ['openai', 'openai_gpt4'],
+        'cache' => [
+            'enabled' => true,
+            'ttl' => 60,
+        ],
+        'rate_limit' => [
+            'requests_per_minute' => 60,
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Providers
     |--------------------------------------------------------------------------
     | Each provider can have: class, model, base_url, env_key (for API key), etc.
