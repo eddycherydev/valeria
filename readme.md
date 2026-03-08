@@ -13,6 +13,7 @@
 - **Migrations** — CLI: `make:migration`, `migrate`, `rollback`; Blueprint API for schema
 - **Configuration** — `.env` loader via `Env::get()`
 - **Macroable** — Extend the Router (e.g. `Router::admin()`, `Router::api()`) with custom macros
+- **Agents & Skills** — Optional AI layer: skills in `app/Skills/`, agent CLI and HTTP API, optional LLM (OpenAI) and prompts
 - PSR-4 autoloading and modular structure
 
 ## Installation
@@ -31,8 +32,10 @@ valeria/
 │   ├── Controllers/
 │   ├── Middleware/
 │   ├── Models/
+│   ├── Agents/             # Agent profiles (optional)
+│   ├── Skills/              # Agent skills (optional)
 │   └── Views/
-├── config/                 # Optional app config
+├── config/                 # App config, prompts
 ├── core/                   # Framework core (Valeria + Lucid)
 │   ├── Attributes/
 │   ├── Contracts/
@@ -100,6 +103,12 @@ From the project root:
 | `php lucid make:migration create_posts_table` | Create a new migration file |
 | `php lucid migrate` | Run pending migrations |
 | `php lucid rollback` | Rollback the last batch of migrations |
+| `php lucid make:skill <Name>` | Create a new skill in `app/Skills/` |
+| `php lucid skill:list` | List registered skills |
+| `php lucid make:agent <Name>` | Create a new agent profile in `app/Agents/` |
+| `php lucid agent:list` | List registered agents |
+| `php lucid agent:run --skill=echo --input='{"message":"hi"}'` | Run a skill |
+| `php lucid agent:run --message="Question" [--agent=name]` | Chat with LLM (optional agent profile) |
 
 After creating a migration, edit the file in `database/migrations/` and define the table and columns in `up()` and `down()` (see [Migrations](docs/migrations.md)).
 
@@ -113,6 +122,7 @@ After creating a migration, edit the file in `database/migrations/` and define t
 | [Views](docs/views.md) | Layouts, sections, includes, escaping |
 | [Models & ORM](docs/models.md) | Models, Query Builder, relations |
 | [Migrations](docs/migrations.md) | Blueprint, Schema, CLI commands |
+| [Agents & Skills](docs/agents-and-skills.md) | Skills, agent CLI/HTTP, optional LLM and prompts |
 
 ## Requirements
 

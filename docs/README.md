@@ -8,5 +8,6 @@
 | [Views](views.md) | Rendering, layouts, sections, escaping |
 | [Models & ORM](models.md) | Lucid models, Query Builder, relations |
 | [Migrations](migrations.md) | Schema, Blueprint, CLI commands |
+| [Agents & Skills](agents-and-skills.md) | Skills, agent CLI/HTTP, optional LLM, prompts |
 
 Start with [Configuration](configuration.md) after installation, then [Routing](routing.md) and [Middleware](middleware.md) for request flow.

@@ -22,7 +22,7 @@ if (is_dir($envPath)) {
     try {
         \Core\Env::load($envPath);
     } catch (Throwable $e) {
-        fwrite(STDERR, "Advertencia: no se pudo cargar .env: " . $e->getMessage() . "\n");
+        fwrite(STDERR, "Warning: could not load .env: " . $e->getMessage() . "\n");
     }
 }
 
@@ -30,17 +30,22 @@ $command = $argv[1] ?? null;
 $arg = $argv[2] ?? null;
 
 if (!$command) {
-    echo "Uso:\n";
-    echo "  php lucid make:migration <nombre>   Crea una nueva migración\n";
-    echo "  php lucid migrate                   Ejecuta migraciones pendientes\n";
-    echo "  php lucid rollback                  Revierte el último batch de migraciones\n";
+    echo "Usage:\n";
+    echo "  php lucid make:migration <name>     Create a new migration\n";
+    echo "  php lucid migrate                   Run pending migrations\n";
+    echo "  php lucid rollback                  Rollback last migration batch\n";
+    echo "  php lucid make:skill <name>         Create a new skill in app/Skills\n";
+    echo "  php lucid skill:list                List registered skills\n";
+    echo "  php lucid make:agent <name>         Create a new agent in app/Agents\n";
+    echo "  php lucid agent:list                 List registered agents\n";
+    echo "  php lucid agent:run [--agent=...]    Run a skill or chat with an agent\n";
     exit(1);
 }
 
 switch ($command) {
     case 'make:migration':
         if (empty($arg)) {
-            fwrite(STDERR, "Indica el nombre de la migración. Ejemplo: php lucid make:migration create_posts_table\n");
+            fwrite(STDERR, "Migration name required. Example: php lucid make:migration create_posts_table\n");
             exit(1);
         }
         (new \Core\Lucid\Commands\MakeMigrationCommand())->handle($arg);
@@ -51,7 +56,30 @@ switch ($command) {
     case 'rollback':
         (new \Core\Lucid\Commands\RollbackCommand())->handle();
         break;
+    case 'make:skill':
+        if (empty($arg)) {
+            fwrite(STDERR, "Skill name required. Example: php lucid make:skill Summarize\n");
+            exit(1);
+        }
+        (new \Core\Lucid\Commands\MakeSkillCommand())->handle($arg);
+        break;
+    case 'skill:list':
+        (new \Core\Lucid\Commands\SkillListCommand())->handle();
+        break;
+    case 'make:agent':
+        if (empty($arg)) {
+            fwrite(STDERR, "Agent name required. Example: php lucid make:agent Support\n");
+            exit(1);
+        }
+        (new \Core\Lucid\Commands\MakeAgentCommand())->handle($arg);
+        break;
+    case 'agent:list':
+        (new \Core\Lucid\Commands\AgentListCommand())->handle();
+        break;
+    case 'agent:run':
+        (new \Core\Lucid\Commands\AgentRunCommand())->handle(array_slice($argv, 2));
+        break;
     default:
-        fwrite(STDERR, "Comando desconocido: $command\n");
+        fwrite(STDERR, "Unknown command: $command\n");
         exit(1);
 }

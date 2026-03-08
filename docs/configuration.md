@@ -34,6 +34,18 @@ DB_PASSWORD=secret
 DB_CHARSET=utf8mb4
 ```
 
+## AI / Agent (optional)
+
+For the agent chat (LLM) feature, you can set:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `OPENAI_API_KEY` | (empty) | OpenAI (or compatible) API key |
+| `OPENAI_BASE_URL` | `https://api.openai.com` | Base URL (e.g. for Azure or a proxy) |
+| `OPENAI_MODEL` | `gpt-4o-mini` | Model name |
+
+Skills work without any of these; only `agent:run --message=...` and `POST /api/agent` with `{"message":"..."}` require the key.
+
 ## Using config in code
 
 Load the env once (done in `public/index.php` and in `lucid`):
